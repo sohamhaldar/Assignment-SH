@@ -5,7 +5,6 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import {
   CalendarCell,
@@ -17,8 +16,7 @@ import {
   RangeCalendar,
 } from "@/components/ui/range-calendar";
 import { Button } from "@/components/ui/button";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { DateRange, DateValue } from "react-aria-components";
+import { DateRange } from "react-aria-components";
 import { CalendarDate } from "@internationalized/date";
 
 interface CalendarModalProps {
@@ -33,7 +31,6 @@ function CalendarModal({ onRangeSelect, currentRange, savedWeekends, countryCode
   const [holidaysByDate, setHolidaysByDate] = useState<Record<string, string[]>>({});
   const [isLoadingHolidays, setIsLoadingHolidays] = useState(false);
   const [holidayError, setHolidayError] = useState<string | null>(null);
-  const [openTooltipKey, setOpenTooltipKey] = useState<string | null>(null);
 
   const dateToCalendarDate = (date: Date): CalendarDate => {
     return new CalendarDate(date.getFullYear(), date.getMonth() + 1, date.getDate());
@@ -200,36 +197,23 @@ function CalendarModal({ onRangeSelect, currentRange, savedWeekends, countryCode
                     const key = fmtCalDate(date);
                     const holidayNames = holidaysByDate[key] || [];
                     const isHoliday = holidayNames.length > 0;
-                    
-                    const cell = (
-                      <CalendarCell
-                        date={date}
-                        className={`w-full ${
-                          isInSavedWeekend && !isInCurrentRange
-                            ? 'bg-accent border border-border text-foreground/80 hover:bg-accent/80'
-                            : ''
-                        } ${
-                          isHoliday
-                            ? 'relative after:content-["\""] after:absolute after:bottom-1 after:w-1.5 after:h-1.5 after:rounded-full after:bg-red-500'
-                            : ''
-                        }`}
-                      />
-                    );
-
-                    if (!isHoliday) return cell;
-
-                    const label = holidayNames.join(', ');
-                    const isOpen = openTooltipKey === key;
+                    const baseClasses = `w-full ${
+                      isInSavedWeekend && !isInCurrentRange
+                        ? 'bg-accent border border-border text-foreground/80 hover:bg-accent/80'
+                        : ''
+                    } ${
+                      isHoliday
+                        ? "relative has-tooltip overflow-visible holiday-dot"
+                        : ''
+                    }`;
 
                     return (
-                      <Popover open={isOpen} onOpenChange={(o) => setOpenTooltipKey(o ? key : null)}>
-                        <PopoverTrigger asChild onMouseEnter={() => setOpenTooltipKey(key)} onMouseLeave={() => setOpenTooltipKey(null)}>
-                          {cell}
-                        </PopoverTrigger>
-                        <PopoverContent side="top" align="center" className="px-2 py-2 font-mono text-xs max-w-[200px]">
-                          {label}
-                        </PopoverContent>
-                      </Popover>
+                      <CalendarCell
+                        date={date}
+                        aria-label={isHoliday ? holidayNames.join(', ') : undefined}
+                        {...(isHoliday ? ({ 'data-tooltip': holidayNames.join(', '), title: holidayNames.join(', ') } as any) : {})}
+                        className={baseClasses}
+                      />
                     );
                   }}
                   </CalendarGridBody>

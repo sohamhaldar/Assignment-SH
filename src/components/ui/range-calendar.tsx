@@ -112,6 +112,7 @@ const CalendarCell = ({ className, ...props }: AriaCalendarCellProps) => {
   const isRange = Boolean(React.useContext(AriaRangeCalendarStateContext))
   return (
     <AriaCalendarCell
+    
       className={composeRenderProps(className, (className, renderProps) =>
         cn(
           buttonVariants({ variant: "ghost" }),
