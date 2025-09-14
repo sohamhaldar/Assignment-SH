@@ -201,8 +201,8 @@ const ExploreNearbySection = () => {
       <Popover open={openTip} onOpenChange={setOpenTip}>
         <PopoverTrigger asChild onMouseEnter={() => setOpenTip(true)} onMouseLeave={() => setOpenTip(false)}>
           <SheetTrigger asChild>
-            <div className=" flex flex-col items-center justify-center rounded-lg hover:bg-gray-100 p-2" role="button" aria-label="Explore nearby (X)" ref={triggerRef}>
-              <Map className="w-10 h-10 md:w-8 md:h-8 lg:h-10 lg:w-10 text-gray-600 mb-1" />
+            <div className=" flex flex-col items-center justify-center rounded-lg p-2 hover:bg-accent cursor-pointer" role="button" aria-label="Explore nearby (X)" ref={triggerRef}>
+              <Map className="w-10 h-10 md:w-8 md:h-8 lg:h-10 lg:w-10 mb-1" />
               <p className="font-mono text-center text-xs text-medium">Explore Nearby</p>
             </div>
           </SheetTrigger>
