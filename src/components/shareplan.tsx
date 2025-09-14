@@ -24,11 +24,9 @@ function SharePlan({align = 'end', side = 'bottom', sideOffset = 8}: {
   
 
 
-  // Get date range from the first and last columns
   const getDateRange = () => {
     if (columns.length === 0) return { start: null, end: null }
     
-    // Parse dates from column IDs (assuming format like "2024-09-14")
     const dates = columns.map(col => {
       const parts = col.id.split('-')
       if (parts.length === 3) {
@@ -79,7 +77,7 @@ function SharePlan({align = 'end', side = 'bottom', sideOffset = 8}: {
       }
     })
     
-    shareText += '✨ Planned with Weekend Planner'
+    shareText += '✨ Planned with Planify'
     return shareText
   }
 
@@ -116,62 +114,56 @@ function SharePlan({align = 'end', side = 'bottom', sideOffset = 8}: {
     const ctx = canvas.getContext('2d')
     if (!ctx) return null
 
-    // Calculate required height based on content
-    let requiredHeight = 300 // Base height for header and footer
+    
+    let requiredHeight = 300 
     
     columns.forEach((column) => {
       if (column.activities.length > 0) {
-        requiredHeight += 80 // Day header
-        requiredHeight += column.activities.length * 90 // Each activity needs 90px
-        requiredHeight += 20 // Extra spacing between days
+        requiredHeight += 80 
+        requiredHeight += column.activities.length * 90 
+        requiredHeight += 20 
       }
     })
 
-    // Set canvas dimensions with dynamic height
+    
     canvas.width = 800
-    canvas.height = Math.max(1000, requiredHeight) // Minimum 1000px, but expand as needed
+    canvas.height = Math.max(1000, requiredHeight) 
 
-    // Clear canvas with gradient background
+    
     const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height)
     gradient.addColorStop(0, '#667eea')
     gradient.addColorStop(1, '#764ba2')
     ctx.fillStyle = gradient
     ctx.fillRect(0, 0, canvas.width, canvas.height)
 
-    // Set font styles
     ctx.fillStyle = '#ffffff'
     ctx.textAlign = 'center'
 
-    // Title
-    ctx.font = 'bold 48px Arial'
+    
+    ctx.font = 'bold 48px Monospace'
     ctx.fillText('🎉 Weekend Plan', canvas.width / 2, 80)
 
-    // Date range
-    ctx.font = '32px Arial'
+    ctx.font = '32px Monospace'
     ctx.fillText(formatDateRange(), canvas.width / 2, 140)
 
-    // Activities
     let yPosition = 220
     ctx.textAlign = 'left'
     
     columns.forEach((column) => {
       if (column.activities.length > 0) {
-        // Day header
         ctx.fillStyle = '#ffffff'
-        ctx.font = 'bold 36px Arial'
+        ctx.font = 'bold 36px Monospace'
         ctx.fillText(`📅 ${column.title}`, 60, yPosition)
         yPosition += 60
 
-        // Activities for this day
         column.activities.forEach((activity, index) => {
           ctx.fillStyle = '#f0f0f0'
-          ctx.font = '28px Arial'
+          ctx.font = '28px Monospace'
           
-          // Activity title with text wrapping
           const activityText = `${index + 1}. ${activity.title}`
-          const maxWidth = 680 // Max width for text
+          const maxWidth = 680 
           
-          // Simple text wrapping
+          
           if (ctx.measureText(activityText).width > maxWidth) {
             const words = activityText.split(' ')
             let line = ''
@@ -192,8 +184,7 @@ function SharePlan({align = 'end', side = 'bottom', sideOffset = 8}: {
           }
           yPosition += 40
 
-          // Duration and location
-          ctx.font = '22px Arial'
+          ctx.font = '22px Monospace'
           ctx.fillStyle = '#d0d0d0'
           const detailText = `⏱️ ${activity.duration} • 📍 ${activity.location}`
           
@@ -212,11 +203,10 @@ function SharePlan({align = 'end', side = 'bottom', sideOffset = 8}: {
       }
     })
 
-    // Footer (positioned at bottom with some margin)
     ctx.fillStyle = '#ffffff'
-    ctx.font = '24px Arial'
+    ctx.font = '24px Monospace'
     ctx.textAlign = 'center'
-    ctx.fillText('✨ Created with Weekend Planner', canvas.width / 2, canvas.height - 50)
+    ctx.fillText('✨ Created with Plannify', canvas.width / 2, canvas.height - 50)
 
     return canvas
   }
@@ -225,7 +215,6 @@ function SharePlan({align = 'end', side = 'bottom', sideOffset = 8}: {
     const canvas = generatePosterCanvas()
     if (!canvas) return
 
-    // Create download link
     const link = document.createElement('a')
     link.download = `weekend-plan-${formatDateRange().replace(/[^a-zA-Z0-9]/g, '-')}.png`
     link.href = canvas.toDataURL('image/png')
@@ -252,7 +241,6 @@ function SharePlan({align = 'end', side = 'bottom', sideOffset = 8}: {
           }
         }
 
-        // Fallback: copy to clipboard
         if (navigator.clipboard && 'write' in navigator.clipboard) {
           await navigator.clipboard.write([
             new ClipboardItem({
@@ -267,7 +255,6 @@ function SharePlan({align = 'end', side = 'bottom', sideOffset = 8}: {
     }
   }
 
-  // Track trigger visibility to avoid registering shortcuts for hidden instances
   useEffect(() => {
     const update = () => {
       const el = triggerRef.current
@@ -283,7 +270,6 @@ function SharePlan({align = 'end', side = 'bottom', sideOffset = 8}: {
     }
   }, [])
 
-  // Keyboard shortcuts: S to open; C copy; I share image; D download; E email; W WhatsApp
   useEffect(() => {
     if (!isTriggerVisible) return
 

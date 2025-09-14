@@ -6,12 +6,12 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
 
 const themes = [
-  { name: 'Light', value: 'light', colors: ['#ffffff', '#f8f9fa', '#e9ecef'] },
-  { name: 'Dark', value: 'dark', colors: ['#212529', '#343a40', '#495057'] },
-  { name: 'Blue', value: 'blue', colors: ['#0066cc', '#3399ff', '#66b3ff'] },
-  { name: 'Green', value: 'green', colors: ['#28a745', '#34ce57', '#5dd879'] },
-  { name: 'Purple', value: 'purple', colors: ['#6f42c1', '#8a63d2', '#a584e3'] },
-  { name: 'Orange', value: 'orange', colors: ['#fd7e14', '#ff8c42', '#ff9a70'] }
+  { name: 'Pearl White', value: 'light', colors: ['#ffffff', '#f8f9fa', '#e9ecef'] },
+  { name: 'Stellar Black', value: 'dark', colors: ['#212529', '#343a40', '#495057'] },
+  { name: 'Glacial Blue', value: 'blue', colors: ['#0066cc', '#3399ff', '#66b3ff'] },
+  { name: 'Twin Mint', value: 'green', colors: ['#28a745', '#34ce57', '#5dd879'] },
+  { name: 'Moonlight Purple', value: 'purple', colors: ['#6f42c1', '#8a63d2', '#a584e3'] },
+  { name: 'Tangy Orange', value: 'orange', colors: ['#fd7e14', '#ff8c42', '#ff9a70'] }
 ];
 
 const ThemeSelector = ({align = 'end', side = 'bottom', sideOffset = 8}: {
@@ -100,7 +100,7 @@ const ThemeSelector = ({align = 'end', side = 'bottom', sideOffset = 8}: {
             />
             ))}
           </div>
-          <p className="text-xs font-medium">{theme.name}</p>
+          <p className="text-xs font-medium text-center">{theme.name}</p>
           </div>
         </DropdownMenuItem>
         ))}
