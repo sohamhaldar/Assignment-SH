@@ -7,7 +7,7 @@ export async function GET(request: NextRequest) {
     const type = searchParams.get('types');
     
     try {
-        let apiUrl = `https://api.olamaps.io/places/v1/nearbysearch?location=${lat},${lng}&radius=10000&withCentroid=false&rankBy=popular&limit=10&api_key=${process.env.NEXT_PUBLIC_OLA_MAPS_KEY}`;
+        let apiUrl = `https://api.olamaps.io/places/v1/nearbysearch?location=${lat},${lng}&radius=10000&withCentroid=false&rankBy=popular&limit=10&api_key=${process.env.OLA_MAPS_KEY}`;
         
         if (type !== 'all') {
             apiUrl += `&types=${type}`;
