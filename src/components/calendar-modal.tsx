@@ -211,7 +211,7 @@ function CalendarModal({ onRangeSelect, currentRange, savedWeekends, countryCode
                       <CalendarCell
                         date={date}
                         aria-label={isHoliday ? holidayNames.join(', ') : undefined}
-                        {...(isHoliday ? ({ 'data-tooltip': holidayNames.join(', '), title: holidayNames.join(', ') } as any) : {})}
+                        {...(isHoliday ? ({ 'data-tooltip': holidayNames.join(', '), title: holidayNames.join(', ') }) : {})}
                         className={baseClasses}
                       />
                     );
